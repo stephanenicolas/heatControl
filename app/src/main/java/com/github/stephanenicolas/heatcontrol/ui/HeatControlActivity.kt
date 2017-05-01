@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.FrameLayout
 import butterknife.BindView
 import com.github.stephanenicolas.heatcontrol.R
+import com.github.stephanenicolas.heatcontrol.features.control.ui.ControlView
+import com.github.stephanenicolas.heatcontrol.features.setting.SettingsView
 import toothpick.Scope
 import toothpick.Toothpick
 
@@ -41,7 +43,7 @@ class HeatControlActivity : AppCompatActivity() {
 
     private fun showControlHeatView(): View {
         contentView.removeAllViews()
-        val controlHeatView = ControlHeatView(this)
+        val controlHeatView = ControlView(this)
         Toothpick.inject(controlHeatView, activityScope)
         contentView.addView(controlHeatView)
         return controlHeatView

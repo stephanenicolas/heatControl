@@ -5,18 +5,76 @@
     android:layout_height="match_parent">
 
   <TextView
-      android:id="@+id/message"
-      android:layout_width="match_parent"
+      android:id="@+id/text_view_ambient_temp_label"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="@dimen/activity_vertical_margin"
       android:layout_marginLeft="@dimen/activity_horizontal_margin"
       android:layout_marginRight="@dimen/activity_horizontal_margin"
       android:layout_marginTop="@dimen/activity_vertical_margin"
-      android:text="@string/title_home"/>
+      android:text="@string/ambient_temp"/>
+
+  <TextView
+      android:id="@+id/text_view_ambient_temp_value"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/text_view_ambient_temp_label"
+      android:layout_alignBaseline="@id/text_view_ambient_temp_label"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+  <TextView
+      android:id="@+id/text_view_target_temp_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/text_view_ambient_temp_label"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:text="@string/target_temp"/>
+
+  <EditText
+      android:id="@+id/edit_text_target_temp_value"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/text_view_target_temp_label"
+      android:layout_alignBaseline="@id/text_view_target_temp_label"
+      android:layout_below="@id/text_view_ambient_temp_value"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+  <TextView
+      android:id="@+id/text_view_error"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/text_view_target_temp_label"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:visibility="invisible"
+      android:text="@string/error"/>
+
+  <ProgressBar
+      android:id="@+id/progress_bar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:indeterminate="true"
+      android:layout_below="@id/text_view_error"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:visibility="invisible"/>
 
   <Button
       android:id="@+id/button_refresh"
-      android:layout_below="@id/message"
+      android:layout_below="@id/progress_bar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -24,5 +82,17 @@
       android:layout_marginRight="@dimen/activity_horizontal_margin"
       android:layout_marginTop="@dimen/activity_vertical_margin"
       android:text="@string/refresh"/>
+
+  <Button
+      android:id="@+id/button_submit"
+      android:layout_toRightOf="@id/button_refresh"
+      android:layout_alignBaseline="@id/button_refresh"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:text="@string/submit"/>
 
 </RelativeLayout>

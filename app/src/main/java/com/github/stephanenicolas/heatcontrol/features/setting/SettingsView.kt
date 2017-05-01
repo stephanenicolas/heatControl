@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.heatcontrol.ui
+package com.github.stephanenicolas.heatcontrol.features.setting
 
 import android.content.Context
 import android.util.AttributeSet

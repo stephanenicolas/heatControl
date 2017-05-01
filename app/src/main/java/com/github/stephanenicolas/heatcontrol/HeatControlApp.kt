@@ -7,13 +7,13 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.HttpUrl
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import okio.Buffer
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.configuration.Configuration
+import java.util.concurrent.TimeUnit
 
-class HeatControlApp: Application() {
+class HeatControlApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -21,10 +21,12 @@ class HeatControlApp: Application() {
         val appScope: Scope = Toothpick.openScope(this)
 
         //Mock webserver for now
-        val mockWebServer:MockWebServer = MockWebServer()
+        val mockWebServer: MockWebServer = MockWebServer()
         val mockResponse = MockResponse()
         mockResponse.setResponseCode(200)
-        mockResponse.setBody("36.2")
+        mockResponse.addHeader("Content-Type", "application/json; charset=utf-8")
+        mockResponse.setBody("{\"ambientTemp\": \"10\", \"targetTemp\": \"37.5\"}")
+        mockResponse.throttleBody(10, 1, TimeUnit.SECONDS)
         mockWebServer.enqueue(mockResponse)
         appScope.installModules(MockModule(mockWebServer))
         Observable.fromCallable { mockWebServer.start() }
@@ -33,9 +35,9 @@ class HeatControlApp: Application() {
     }
 }
 
-class MockModule: Module {
+class MockModule : Module {
     constructor(mockWebServer: MockWebServer) {
-        bind(BaseUrlProvider::class.java).toInstance( object: BaseUrlProvider {
+        bind(BaseUrlProvider::class.java).toInstance(object : BaseUrlProvider {
             override fun getBaseUrl(): HttpUrl = mockWebServer.url("/")
         })
     }
