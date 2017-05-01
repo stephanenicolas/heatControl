@@ -3,17 +3,21 @@ package com.github.stephanenicolas.heatcontrol.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.FrameLayout
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.github.stephanenicolas.heatcontrol.R
+import com.github.stephanenicolas.heatcontrol.usecases.ControlHeatState
 import javax.inject.Inject
 
-class ControlHeatView : FrameLayout {
+class ControlHeatView : RelativeLayout {
 
     @BindView(R.id.message)
     lateinit var messageView: TextView
+    @BindView(R.id.button_refresh)
+    lateinit var buttonRefresh: Button
     @Inject
     lateinit var controlHeatPresenter: ControlHeatPresenter
 
@@ -28,20 +32,15 @@ class ControlHeatView : FrameLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         controlHeatPresenter.attach(this)
+        buttonRefresh.setOnClickListener { controlHeatPresenter.refresh() }
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         controlHeatPresenter.detach()
+        super.onDetachedFromWindow()
     }
 
-    fun setTargetTemp(targetTemp: Float) {
-        messageView!!.text = "$targetTemp C"
-    }
-
-    fun setAmbientTemp(ambientTemp: Float) {
-    }
-
-    fun setRefreshing(isRefreshing: Boolean) {
+    fun setControlHeatState(controlHeatState: ControlHeatState) {
+        messageView.text = "${controlHeatState.targetTemp} C"
     }
 }

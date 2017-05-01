@@ -1,30 +1,51 @@
 package com.github.stephanenicolas.heatcontrol.usecases
 
-import javax.inject.Inject
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Singleton
 
 @Singleton
 class ControlHeatStateStore {
 
+    private val subject: PublishSubject<ControlHeatState> = PublishSubject.create<ControlHeatState>()
     private var state: ControlHeatState = initState()
 
     private fun initState(): ControlHeatState {
-        return ControlHeatState()
+        val newState = ControlHeatState()
+        assignState(newState)
+        return newState
     }
 
-    public fun reduce(action: Action, inState: ControlHeatState): ControlHeatState {
-        when( action ) {
-            is SetTargetTempAction ->  {
+    private fun assignState(newState: ControlHeatState) {
+        this.state = newState
+        subject.onNext(newState)
+    }
+
+    fun dispatch(action: Action) {
+        assignState(reduce(action, state))
+    }
+
+    private fun reduce(action: Action, inState: ControlHeatState): ControlHeatState {
+        var newState:ControlHeatState?
+        when (action) {
+            is SetTargetTempAction -> {
                 return ControlHeatState(action.temp, inState.ambiantTemp)
             }
-            is GetTargetTempAction ->  {
-                return ControlHeatState(inState.targetTemp, inState.ambiantTemp)
+            is RefreshAmbientTemperatureAction -> {
+                var targetTemp = inState.targetTemp
+                if (targetTemp == 0F) {
+                    targetTemp = action.temp
+                }
+                newState = ControlHeatState(targetTemp, action.temp)
             }
-            is GetAmbientAction ->  {
-                return ControlHeatState(inState.targetTemp, inState.ambiantTemp)
-            }
+            else -> newState = inState
         }
-        return inState
+        assignState(newState)
+        return newState
+    }
+
+    fun getStateObservable(): Observable<ControlHeatState> {
+        return subject
     }
 
     fun getState(): ControlHeatState {
