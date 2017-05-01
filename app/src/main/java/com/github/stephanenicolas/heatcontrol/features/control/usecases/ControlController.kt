@@ -1,8 +1,8 @@
 package com.github.stephanenicolas.heatcontrol.features.control.usecases
 
 import com.github.stephanenicolas.heatcontrol.base.network.BaseUrlProvider
-import com.github.stephanenicolas.heatcontrol.base.network.HeatResponse
 import com.github.stephanenicolas.heatcontrol.base.network.HeatControlApi
+import com.github.stephanenicolas.heatcontrol.base.network.HeatResponse
 import com.github.stephanenicolas.heatcontrol.base.network.THE_KEY
 import com.github.stephanenicolas.heatcontrol.features.control.state.ControlStore
 import com.github.stephanenicolas.heatcontrol.features.control.state.ErrorControlAction
@@ -16,40 +16,37 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 
-class ControlController @Inject constructor(baseUrlProvider: BaseUrlProvider, val controlHeatStore: ControlStore) {
+class ControlController @Inject constructor(val baseUrlProvider: BaseUrlProvider,
+                                            val controlHeatStore: ControlStore) {
 
-    private val heatControlApi: HeatControlApi
     private val subscriptions: CompositeDisposable = CompositeDisposable()
-
-    init {
-        val retrofit = Retrofit.Builder()
-                .baseUrl(baseUrlProvider.getBaseUrl())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        heatControlApi = retrofit.create(HeatControlApi::class.java)
-    }
 
     fun detach() {
         subscriptions.dispose()
     }
 
     fun refreshTemperatures() {
-        val disposable = heatControlApi.getAmbientTemperature(THE_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccessGetTargetTemp,
-                        this::onFailureGetTargetTemp)
-        subscriptions.add(disposable)
+        val heatControlApi = createRetrofit()
+        if (heatControlApi != null) {
+            val disposable = heatControlApi.getAmbientTemperature(THE_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onSuccessGetTargetTemp,
+                            this::onFailureGetTargetTemp)
+            subscriptions.add(disposable)
+        }
     }
 
     fun setTargetTemperature(targetTemp: String) {
-        val disposable = heatControlApi.setTargetTemperature(targetTemp, THE_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccessGetTargetTemp,
-                        this::onFailureGetTargetTemp)
-        subscriptions.add(disposable)
+        val heatControlApi = createRetrofit()
+        if (heatControlApi != null) {
+            val disposable = heatControlApi.setTargetTemperature(targetTemp, THE_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onSuccessGetTargetTemp,
+                            this::onFailureGetTargetTemp)
+            subscriptions.add(disposable)
+        }
     }
 
     private fun onSuccessGetTargetTemp(heatResponse: HeatResponse) {
@@ -60,5 +57,19 @@ class ControlController @Inject constructor(baseUrlProvider: BaseUrlProvider, va
     private fun onFailureGetTargetTemp(throwable: Throwable) {
         val action = ErrorControlAction(throwable)
         controlHeatStore.dispatch(action)
+    }
+
+    private fun createRetrofit(): HeatControlApi? {
+        if (baseUrlProvider.httpUrl == null) {
+            onFailureGetTargetTemp(IllegalStateException("No base url defined"))
+            return null
+        }
+
+        val retrofit = Retrofit.Builder()
+                .baseUrl(baseUrlProvider.httpUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        return retrofit.create(HeatControlApi::class.java)
     }
 }
