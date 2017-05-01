@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.heatcontrol.features.control.usecases
+package com.github.stephanenicolas.heatcontrol.features.control.state
 
 open class ControlAction
 class SetTargetTempControlAction(var targetTemp:Float): ControlAction()

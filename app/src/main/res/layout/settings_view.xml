@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
+    android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools">
 
   <TextView
-      android:id="@+id/settings"
-      android:layout_width="match_parent"
+      android:id="@+id/text_view_api_key_label"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="@dimen/activity_vertical_margin"
       android:layout_marginLeft="@dimen/activity_horizontal_margin"
       android:layout_marginRight="@dimen/activity_horizontal_margin"
       android:layout_marginTop="@dimen/activity_vertical_margin"
-      android:text="@string/title_settings"/>
+      android:text="@string/api_key_label"/>
+  <EditText
+      android:id="@+id/edit_text_api_key_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:inputType="none"
+      android:text="Name"
+      android:ems="10"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentEnd="true"
+      android:layout_toEndOf="@id/text_view_api_key_label"/>
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler_hosts"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/text_view_api_key_label"
+      android:layout_above="@+id/reset_button"
+      tools:listitem="@layout/host_view"/>
+  <Button
+      android:id="@+id/reset_button"
+      android:text="@string/reset"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"/>
+  <Button
+      android:id="@+id/save_button"
+      android:text="@string/save"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginEnd="13dp"
+      android:layout_toEndOf="@id/reset_button"/>
 
-</merge>
+</RelativeLayout>

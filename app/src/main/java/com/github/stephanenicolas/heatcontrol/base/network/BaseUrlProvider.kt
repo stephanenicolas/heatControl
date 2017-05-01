@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.heatcontrol.network
+package com.github.stephanenicolas.heatcontrol.base.network
 
 import okhttp3.HttpUrl
 

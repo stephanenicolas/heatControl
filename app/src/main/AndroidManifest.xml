@@ -14,7 +14,7 @@
       android:name=".HeatControlApp">
 
     <activity
-        android:name=".ui.HeatControlActivity"
+        android:name="com.github.stephanenicolas.heatcontrol.main.ui.HeatControlActivity"
         android:label="@string/app_name">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

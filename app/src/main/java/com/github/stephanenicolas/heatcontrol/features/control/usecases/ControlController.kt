@@ -1,13 +1,12 @@
-package com.github.stephanenicolas.heatcontrol.features.control.ui
+package com.github.stephanenicolas.heatcontrol.features.control.usecases
 
-import android.util.Log
-import com.github.stephanenicolas.heatcontrol.network.BaseUrlProvider
-import com.github.stephanenicolas.heatcontrol.network.HeatResponse
-import com.github.stephanenicolas.heatcontrol.network.HeatControlApi
-import com.github.stephanenicolas.heatcontrol.network.THE_KEY
-import com.github.stephanenicolas.heatcontrol.features.control.usecases.ControlStore
-import com.github.stephanenicolas.heatcontrol.features.control.usecases.ErrorControlAction
-import com.github.stephanenicolas.heatcontrol.features.control.usecases.RefreshTemperaturesControlAction
+import com.github.stephanenicolas.heatcontrol.base.network.BaseUrlProvider
+import com.github.stephanenicolas.heatcontrol.base.network.HeatResponse
+import com.github.stephanenicolas.heatcontrol.base.network.HeatControlApi
+import com.github.stephanenicolas.heatcontrol.base.network.THE_KEY
+import com.github.stephanenicolas.heatcontrol.features.control.state.ControlStore
+import com.github.stephanenicolas.heatcontrol.features.control.state.ErrorControlAction
+import com.github.stephanenicolas.heatcontrol.features.control.state.RefreshTemperaturesControlAction
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

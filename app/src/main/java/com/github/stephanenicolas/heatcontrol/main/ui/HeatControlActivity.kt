@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.heatcontrol.ui
+package com.github.stephanenicolas.heatcontrol.main.ui
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import butterknife.BindView
 import com.github.stephanenicolas.heatcontrol.R
 import com.github.stephanenicolas.heatcontrol.features.control.ui.ControlView
-import com.github.stephanenicolas.heatcontrol.features.setting.SettingsView
+import com.github.stephanenicolas.heatcontrol.features.setting.ui.SettingsView
 import toothpick.Scope
 import toothpick.Toothpick
 

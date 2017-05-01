@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.heatcontrol.network;
+package com.github.stephanenicolas.heatcontrol.base.network;
 
 import io.reactivex.Single
 import retrofit2.http.POST

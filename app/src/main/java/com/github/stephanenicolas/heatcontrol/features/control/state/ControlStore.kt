@@ -1,4 +1,6 @@
-package com.github.stephanenicolas.heatcontrol.features.control.usecases
+package com.github.stephanenicolas.heatcontrol.features.control.state
+
+import io.reactivex.Observable
 
 @javax.inject.Singleton
 class ControlStore {

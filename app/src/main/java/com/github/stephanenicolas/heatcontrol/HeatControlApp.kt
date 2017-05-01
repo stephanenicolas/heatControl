@@ -1,7 +1,7 @@
 package com.github.stephanenicolas.heatcontrol
 
 import android.app.Application
-import com.github.stephanenicolas.heatcontrol.network.BaseUrlProvider
+import com.github.stephanenicolas.heatcontrol.base.network.BaseUrlProvider
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.HttpUrl
@@ -11,6 +11,7 @@ import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.config.Module
 import toothpick.configuration.Configuration
+import toothpick.smoothie.module.SmoothieApplicationModule
 import java.util.concurrent.TimeUnit
 
 class HeatControlApp : Application() {
@@ -28,7 +29,7 @@ class HeatControlApp : Application() {
         mockResponse.setBody("{\"ambientTemp\": \"10\", \"targetTemp\": \"37.5\"}")
         mockResponse.throttleBody(10, 1, TimeUnit.SECONDS)
         mockWebServer.enqueue(mockResponse)
-        appScope.installModules(MockModule(mockWebServer))
+        appScope.installModules(SmoothieApplicationModule(this), MockModule(mockWebServer))
         Observable.fromCallable { mockWebServer.start() }
                 .subscribeOn(Schedulers.io())
                 .subscribe()

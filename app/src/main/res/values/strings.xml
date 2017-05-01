@@ -7,4 +7,11 @@
   <string name="refresh">Refresh</string>
   <string name="submit">Submit</string>
   <string name="error">Error</string>
+  <string name="api_key_label">Api Key</string>
+  <string name="reset">Reset</string>
+  <string name="save">Save</string>
+  <string name="host_name">Host name</string>
+  <string name="host_value">ip:port</string>
+  <string name="delete">delete</string>
+  <string name="add_host">add host</string>
 </resources>

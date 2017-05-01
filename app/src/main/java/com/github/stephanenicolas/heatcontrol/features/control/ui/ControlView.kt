@@ -4,8 +4,9 @@ import android.util.Log
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.github.stephanenicolas.heatcontrol.R
-import com.github.stephanenicolas.heatcontrol.features.control.usecases.ControlState
-import com.github.stephanenicolas.heatcontrol.features.control.usecases.ControlStore
+import com.github.stephanenicolas.heatcontrol.features.control.state.ControlState
+import com.github.stephanenicolas.heatcontrol.features.control.state.ControlStore
+import com.github.stephanenicolas.heatcontrol.features.control.usecases.ControlController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -59,7 +60,7 @@ class ControlView : android.widget.RelativeLayout {
     }
 
     private fun showControlState(controlState: ControlState) {
-        if( controlState.throwable == null) {
+        if (controlState.throwable == null) {
             ambientTempView.text = "${controlState.ambiantTemp}"
             targetTempView.setText("${controlState.targetTemp}")
             errorView.visibility = android.view.View.INVISIBLE
