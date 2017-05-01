@@ -32,7 +32,7 @@ dependencies {
   kapt 'com.jakewharton:butterknife-compiler:8.0.1'
   compile 'com.github.stephanenicolas.toothpick:toothpick-runtime:1.0.6'
   compile 'com.github.stephanenicolas.toothpick:smoothie:1.0.6'
-  annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.0.6'
+  kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.0.6'
 
   testCompile 'junit:junit:4.12'
 
