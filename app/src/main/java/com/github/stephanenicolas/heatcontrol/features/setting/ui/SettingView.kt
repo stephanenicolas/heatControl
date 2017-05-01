@@ -50,7 +50,6 @@ class SettingsView : FrameLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        settingController.reset()
         updateState(settingStore.getState())
         settingStore.getStateObservable()
                 .subscribeOn(Schedulers.io())

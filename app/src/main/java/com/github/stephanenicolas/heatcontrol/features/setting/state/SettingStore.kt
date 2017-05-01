@@ -39,7 +39,7 @@ class SettingStore {
             }
             is AddHostAction -> {
                 val newHostList = ArrayList(inState.hostList)
-                newHostList.add(Host("local","localhost:80"))
+                newHostList.add(Host("local","http://localhost:80"))
                 newState = SettingState(inState.key, newHostList)
             }
             is SelectHostAction -> {
