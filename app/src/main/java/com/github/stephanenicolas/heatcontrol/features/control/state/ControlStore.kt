@@ -5,7 +5,7 @@ import io.reactivex.Observable
 @javax.inject.Singleton
 class ControlStore {
 
-    private val subject: io.reactivex.subjects.PublishSubject<ControlState> = io.reactivex.subjects.PublishSubject.create<ControlState>()
+    private val subject: io.reactivex.subjects.BehaviorSubject<ControlState> = io.reactivex.subjects.BehaviorSubject.create<ControlState>()
     private var state: ControlState = initState()
 
     private fun initState(): ControlState {

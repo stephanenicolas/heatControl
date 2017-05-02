@@ -5,13 +5,14 @@ import javax.inject.Singleton
 @Singleton
 class SettingStore {
 
-    private val subject: io.reactivex.subjects.PublishSubject<SettingState> = io.reactivex.subjects.PublishSubject.create<SettingState>()
+    private val subject: io.reactivex.subjects.BehaviorSubject<SettingState> = io.reactivex.subjects.BehaviorSubject.create<SettingState>()
     private var state: SettingState = initState()
 
     private fun initState(): SettingState {
         val newState = SettingState()
         newState.key = "foo"
         addMockHost(newState)
+        newState.hostList.get(0).isSelected = true
         assignState(newState)
         return newState
     }

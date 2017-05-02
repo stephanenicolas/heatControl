@@ -43,7 +43,6 @@ class ControlView : android.widget.RelativeLayout {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        showControlState(controlHeatStore.getState())
         val disposable = controlHeatStore.getStateObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showControlState)
