@@ -2,6 +2,7 @@ package com.github.stephanenicolas.heatcontrol.features.control.state
 
 import javax.inject.Singleton
 
+
 @Singleton
 class SettingStore {
 

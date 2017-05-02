@@ -1,7 +1,6 @@
 package com.github.stephanenicolas.heatcontrol.features.control.usecases
 
 import android.content.SharedPreferences
-import com.github.stephanenicolas.heatcontrol.base.network.BaseUrlProvider
 import com.github.stephanenicolas.heatcontrol.features.control.state.*
 import com.google.gson.Gson
 import javax.inject.Inject
@@ -9,8 +8,7 @@ import javax.inject.Inject
 const val KEY_SETTING: String = "KEY_SETTING"
 
 class SettingController @Inject constructor(val settingStore: SettingStore,
-                                            val sharedPrefs: SharedPreferences,
-                                            val baseUrlProvider: BaseUrlProvider) {
+                                            val sharedPrefs: SharedPreferences) {
 
 
     fun setApiKey(key: String) {
@@ -27,7 +25,6 @@ class SettingController @Inject constructor(val settingStore: SettingStore,
 
     fun setlectHost(position: Int) {
         settingStore.dispatch(SelectHostAction(position))
-        baseUrlProvider.update()
     }
 
     fun renameHost(position: Int, name: String) {
@@ -36,7 +33,6 @@ class SettingController @Inject constructor(val settingStore: SettingStore,
 
     fun changeAddressHost(position: Int, address: String) {
         settingStore.dispatch(SetHostAction(position, address))
-        baseUrlProvider.update()
     }
 
     fun reset() {
@@ -48,7 +44,6 @@ class SettingController @Inject constructor(val settingStore: SettingStore,
         } else {
             settingStore.dispatch(ResetAction(null))
         }
-        baseUrlProvider.update()
     }
 
     fun save(settingState: SettingState) {

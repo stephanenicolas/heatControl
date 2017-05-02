@@ -15,18 +15,24 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BaseUrlProvider @Inject constructor(val settingStore: SettingStore) {
+class BaseUrlProvider @Inject constructor(settingStore: SettingStore) {
 
     var httpUrl: HttpUrl? = null
+    var key:String? = null
     var mockWebServer: MockWebServer? = null
 
     init {
-        update()
+        settingStore.getStateObservable()
+                .subscribe(this::update)
     }
 
-    fun update() {
-        val settingState = settingStore.getState()
+    fun update(settingState: SettingState) {
         httpUrl = createBaseUrl(settingState)
+        key = createKey(settingState)
+    }
+
+    private fun createKey(settingState: SettingState): String? {
+        return settingState.key
     }
 
     private fun createBaseUrl(settingState: SettingState): HttpUrl? {
@@ -51,9 +57,15 @@ class BaseUrlProvider @Inject constructor(val settingStore: SettingStore) {
             val mockResponse = MockResponse()
             mockResponse.setResponseCode(200)
             mockResponse.addHeader("Content-Type", "application/json; charset=utf-8")
-            mockResponse.setBody("{\"ambientTemp\": \"10\", \"targetTemp\": \"37.5\"}")
+            mockResponse.setBody("{\"data\": \"10\"}")
             mockResponse.throttleBody(10, 1, TimeUnit.SECONDS)
             mockWebServer!!.enqueue(mockResponse)
+            val mockResponse2 = MockResponse()
+            mockResponse2.setResponseCode(200)
+            mockResponse2.addHeader("Content-Type", "application/json; charset=utf-8")
+            mockResponse2.setBody("{\"data\": \"37.5\"}")
+            mockResponse2.throttleBody(10, 1, TimeUnit.SECONDS)
+            mockWebServer!!.enqueue(mockResponse2)
             Observable.fromCallable {
                 mockWebServer!!.start()
                 httpUrl = mockWebServer!!.url("/")

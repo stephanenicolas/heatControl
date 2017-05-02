@@ -4,13 +4,13 @@ import io.reactivex.Single
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-const val THE_KEY: String = "thekey"
-const val THE_URL: String = "www.raytrex.com"
-
 interface HeatControlApi {
-    @POST("/?action=getTemperature")
-    fun getAmbientTemperature(@Query("cle") key: String): Single<HeatResponse>
+    @POST("/?action=getAmbiantTemp")
+    fun getAmbientTemperature(): Single<HeatResponse>
 
-    @POST("/?action=setTemperature")
-    fun setTargetTemperature(@Query("temperature") targetTemp: String, @Query("cle") key: String): Single<HeatResponse>
+    @POST("/?action=getTargetTemp")
+    fun getTargetTemperature(): Single<HeatResponse>
+
+    @POST("/?action=setTargetTemp")
+    fun setTargetTemperature(@Query("param") targetTemp: String): Single<HeatResponse>
 }
